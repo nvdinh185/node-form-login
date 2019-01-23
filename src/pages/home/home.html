@@ -1,0 +1,120 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Ionic Blank
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-slides pager (ionSlideDidChange)="slideChanged()">
+    <!-- slide 0 - Đăng nhập -->
+    <ion-slide>
+      <div class="full-login">
+        <div class="logo-login">
+          <div>
+            <a href="/"><img src="/assets/imgs/logo-login.gif"></a>
+          </div>
+        </div>
+        <form (ngSubmit)="login()" [formGroup]="loginForm">
+          <ion-item>
+            <ion-label floating>Nhap user(*)</ion-label>
+            <ion-input type="text" formControlName="username"></ion-input>
+          </ion-item>
+          <ion-label *ngIf="loginForm.controls?.username?.invalid && loginForm.controls?.username?.touched">
+            <span class="error">Vui lòng nhập username</span>
+          </ion-label>
+          <ion-buttons end>
+            <button ion-button type="submit" icon-end round [disabled]="loginForm.controls?.username?.invalid">
+              Đăng nhập
+              <ion-icon name="share-alt"></ion-icon>
+            </button>
+          </ion-buttons>
+        </form>
+      </div>
+    </ion-slide>
+
+    <!-- slide 1 - xác nhận -->
+    <ion-slide>
+      <div class="full-login">
+        <div class="logo-login">
+          <div><a href="/">
+              <img src="/assets/imgs/logo-login.gif"></a>
+          </div>
+        </div>
+        <div class="box-login">
+          <div class="form-login">
+            <div class="title-dv">Dịch vụ VCB-iB@nking</div>
+            <form method="post">
+              <div class="control-login">
+                <input type="text" placeholder="Mã kiểm tra" autocomplete="off" name="captcha" style="padding-left: 7%">
+              </div>
+              <div class="control-login">
+                <div style="float:left; width:100%">
+                  <button type="submit" class="btn-dangnhap" (click)="xacNhan()">Xác nhận</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </ion-slide>
+
+    <!-- slide 2 - Đăng ký -->
+    <ion-slide>
+      <div class="full-login">
+        <div class="logo-login">
+          <div><a href="/">
+              <img src="/assets/imgs/logo-login.gif"></a>
+          </div>
+        </div>
+        <div class="box-login">
+          <div class="form-login">
+            <div class="title-dv">Dịch vụ VCB-iB@nking</div>
+            <form method="post">
+              <div class="control-login">
+                <input type="password" placeholder="Password" autocomplete="off" name="username">
+              </div>
+              <div class="control-login">
+                <input type="text" placeholder="Nickname" autocomplete="off" name="pass">
+              </div>
+              <div class="control-login">
+                <input type="text" placeholder="Email" autocomplete="off" name="captcha">
+              </div>
+              <div class="control-login">
+                <input type="text" placeholder="Address" autocomplete="off" name="captcha">
+              </div>
+              <div class="control-login">
+                <div style="float:left; width:100%">
+                  <button type="submit" class="btn-dangnhap">Đăng ký</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </ion-slide>
+
+    <!-- slide 3 view ds user -->
+    <ion-slide>
+      <ion-list>
+        <ion-list-header>
+          Playlist
+        </ion-list-header>
+
+        <ion-item-group>
+          <ion-item *ngFor="let user of users">
+            <ion-avatar item-start>
+              <img src={{user.picture?.large}} *ngIf="user.picture">
+              <ion-icon name="contact" *ngIf="!user.picture"></ion-icon>
+            </ion-avatar>
+            <h2>{{ user.stt }}</h2>
+            <p>{{ user.ho_va_ten }}</p>
+          </ion-item>
+        </ion-item-group>
+      </ion-list>
+    </ion-slide>
+  </ion-slides>
+
+
+</ion-content>
