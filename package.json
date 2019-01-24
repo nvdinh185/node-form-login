@@ -32,7 +32,19 @@
     "sw-toolbox": "3.6.0",
     "zone.js": "0.8.26",
     "@ionic/app-scripts": "3.2.1",
-    "typescript": "~2.6.2"
+    "typescript": "~2.6.2",
+    "convert-excel-to-json": "^1.6.0",
+    "dddos": "^0.1.2",
+    "express": "^4.16.4",
+    "formidable": "^1.2.1",
+    "fs": "0.0.1-security",
+    "http": "0.0.0",
+    "https": "^1.0.0",
+    "os": "^0.1.1",
+    "path": "^0.12.7",
+    "sqlite3": "^4.0.6",
+    "url": "^0.11.0",
+    "xlsx-to-json-lc": "^0.5.0"
   },
   "devDependencies": {},
   "description": "An Ionic project"
