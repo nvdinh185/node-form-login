@@ -6,6 +6,8 @@ function main(isHttp) {
 
   const cors = require('./handlers/cors-handler');
   app.use(cors.CorsHandler.cors);
+
+  app.use(express.static(__dirname + '/www'));
     
   const resource1 = require('./routes/resource-excel');
   app.use('/excel', resource1);

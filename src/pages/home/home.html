@@ -8,12 +8,13 @@
 
 <ion-content padding>
   <ion-slides pager (ionSlideDidChange)="slideChanged()">
+
     <!-- slide 0 - Đăng nhập -->
     <ion-slide>
       <div class="full-login">
         <div class="logo-login">
           <div>
-            <a href="/"><img src="/assets/imgs/logo-login.gif"></a>
+            <a href="/"><img src="/assets/imgs/mobi.png"></a>
           </div>
         </div>
         <form (ngSubmit)="login()" [formGroup]="loginForm">
@@ -39,7 +40,7 @@
       <div class="full-login">
         <div class="logo-login">
           <div><a href="/">
-              <img src="/assets/imgs/logo-login.gif"></a>
+              <img src="/assets/imgs/mobi.png"></a>
           </div>
         </div>
         <div class="box-login">
@@ -60,33 +61,62 @@
       </div>
     </ion-slide>
 
-    <!-- slide 2 - Đăng ký -->
+    <!-- slide 2 - Đăng ký thông tin-->
     <ion-slide>
       <div class="full-login">
         <div class="logo-login">
           <div><a href="/">
-              <img src="/assets/imgs/logo-login.gif"></a>
+              <img src="/assets/imgs/mobifone.jpg"></a>
           </div>
         </div>
         <div class="box-login">
           <div class="form-login">
             <div class="title-dv">Dịch vụ VCB-iB@nking</div>
-            <form method="post">
+            <form [formGroup]="registerForm">
               <div class="control-login">
-                <input type="password" placeholder="Password" autocomplete="off" name="username">
+                <ion-item>
+                  <ion-label floating>Nhập password(*)</ion-label>
+                  <ion-input type="text" formControlName="password"></ion-input>
+                </ion-item>
+                <ion-label *ngIf="registerForm.controls?.password?.invalid && registerForm.controls?.password?.touched">
+                  <span class="error">Vui lòng nhập password</span>
+                </ion-label>
               </div>
               <div class="control-login">
-                <input type="text" placeholder="Nickname" autocomplete="off" name="pass">
+                <ion-item>
+                  <ion-label floating>Nhập Fullname(*)</ion-label>
+                  <ion-input type="text" formControlName="fullname"></ion-input>
+                </ion-item>
+                <ion-label *ngIf="registerForm.controls?.fullname?.invalid && registerForm.controls?.fullname?.touched">
+                  <span class="error">Vui lòng nhập fullname</span>
+                </ion-label>
               </div>
               <div class="control-login">
-                <input type="text" placeholder="Email" autocomplete="off" name="captcha">
+                <ion-item>
+                  <ion-label floating>Nhập Email(*)</ion-label>
+                  <ion-input type="text" formControlName="email"></ion-input>
+                </ion-item>
+                <ion-label *ngIf="registerForm.controls?.email?.invalid && registerForm.controls?.email?.touched">
+                  <span class="error">Vui lòng nhập email</span>
+                </ion-label>
               </div>
               <div class="control-login">
-                <input type="text" placeholder="Address" autocomplete="off" name="captcha">
+                <ion-item>
+                  <ion-label floating>Nhập Số điện thoại(*)</ion-label>
+                  <ion-input type="text" formControlName="phone"></ion-input>
+                </ion-item>
+                <ion-label *ngIf="registerForm.controls?.phone?.invalid && registerForm.controls?.phone?.touched">
+                  <span class="error">Vui lòng nhập số điện thoại</span>
+                </ion-label>
               </div>
               <div class="control-login">
                 <div style="float:left; width:100%">
-                  <button type="submit" class="btn-dangnhap">Đăng ký</button>
+                  <ion-buttons end>
+                    <button ion-button type="button" (click)="nhapThongTin()" icon-end round [disabled]="registerForm.controls?.password?.invalid || registerForm.controls?.fullname?.invalid || registerForm.controls?.email?.invalid || registerForm.controls?.phone?.invalid">
+                      Nhập
+                      <ion-icon name="share-alt"></ion-icon>
+                    </button>
+                  </ion-buttons>
                 </div>
               </div>
             </form>
@@ -95,26 +125,22 @@
       </div>
     </ion-slide>
 
-    <!-- slide 3 view ds user -->
+    <!-- slide 3 nhap chu ky -->
     <ion-slide>
-      <ion-list>
-        <ion-list-header>
-          Playlist
-        </ion-list-header>
-
-        <ion-item-group>
-          <ion-item *ngFor="let user of users">
-            <ion-avatar item-start>
-              <img src={{user.picture?.large}} *ngIf="user.picture">
-              <ion-icon name="contact" *ngIf="!user.picture"></ion-icon>
-            </ion-avatar>
-            <h2>{{ user.stt }}</h2>
-            <p>{{ user.ho_va_ten }}</p>
-          </ion-item>
-        </ion-item-group>
-      </ion-list>
+      <canvas-draw #canvas></canvas-draw>
+      <input value="{{ canvas.img_src }}" />
+      <button ion-button (click)="register(canvas.img_src)" icon-end round id="dangky">
+        Nhập
+        <ion-icon name="share-alt"></ion-icon>
+      </button>
     </ion-slide>
+
+
+    <!-- slide 4 - Info-->
+    <ion-slide>
+      <h1>Họ tên: {{ UserInfo.fullname }}</h1>
+      Chữ ký: <img src="{{ UserInfo.image }}" alt="hinhanh" />
+    </ion-slide>
+
   </ion-slides>
-
-
 </ion-content>

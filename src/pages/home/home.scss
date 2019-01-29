@@ -60,15 +60,15 @@ page-home {
     
     .box-login .form-login .control-login {
         width: 100%;
-        padding: 7px 0 2px 0;
-        margin: 0 auto;
+        //padding: 7px 0 2px 0;
+        //margin: 0 auto;
     }
     
     .box-login .form-login .control-login input {
-        width: 100%;
-        padding: 0 8px;
+        //width: 100%;
+        //padding: 0 8px;
         border: 1px solid #00502f;
-        height: 40px;
+        //height: 40px;
     }
     
     .box-login .form-login .control-login .captcha-login {
@@ -177,5 +177,8 @@ page-home {
     .error{
         color: red;
         font-style: italic;
+    }
+    #dangky{
+        margin-bottom: 40px !important;
     }
 }
