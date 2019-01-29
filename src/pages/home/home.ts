@@ -36,7 +36,10 @@ export class HomePage {
 
   ngOnInit() {
     console.log("platform", this.platform.platforms());
-    //this.isDesktop = this.platform.is('core');
+    this.isDesktop = this.platform.is('core');
+    if(this.isDesktop){
+      alert('Đây là giao diện web ở trên trình duyệt!');
+    }
 
 
     this.slides.lockSwipes(true);
@@ -57,16 +60,35 @@ export class HomePage {
 
 
   login() {
-    this.postToServer();
-
-    setTimeout(() => {
+    var promise = new Promise((resolve, reject) => {
+      let loading = this.loadingCtrl.create({
+        content: 'Đang kiểm tra đăng nhập...'
+      });
+      let username = this.loginForm.value;
+      const url = 'http://localhost:8080/db/json-user';
+      const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      const body = JSON.stringify(username);
+      loading.present();
+      this.httpClient.post(url, body, { headers })
+        .toPromise()
+        .then(data => {
+          resolve(data);
+        })
+        .catch(err => {
+          reject(err);
+        });
+      loading.dismiss();
+    })
+    promise.then(data => {
+      this.loginStatus = JSON.stringify(data);
       if (this.loginStatus == "1") {
-        //this.getFromServer();
         this.goToSlide(this.slidePages.register);
       } else {
         alert("Sai tên đăng nhập hoặc mật khẩu!");
       }
-    }, 1000)
+    }).catch(err => {
+      console.log('err', err);
+    })
   }
 
   nhapThongTin() {
@@ -130,25 +152,5 @@ export class HomePage {
       .catch(err => {
         console.log(err);
       })
-  }
-
-  postToServer() {
-    let loading = this.loadingCtrl.create({
-      content: 'Đang kiểm tra đăng nhập...'
-    });
-    let username = this.loginForm.value;
-    const url = 'http://localhost:8080/db/json-user';
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const body = JSON.stringify(username);
-    loading.present();
-    this.httpClient.post(url, body, { headers })
-      .toPromise()
-      .then(data => {
-        this.loginStatus = JSON.stringify(data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    loading.dismiss();
   }
 }
