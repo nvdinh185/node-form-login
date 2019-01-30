@@ -1,5 +1,6 @@
-//scroll for slide
-.swiper-slide{
-    overflow-y: scroll;
-    display: block;
+page-home{
+    .swiper-slide{
+        overflow-y: scroll;
+        display: block;
+    }
 }

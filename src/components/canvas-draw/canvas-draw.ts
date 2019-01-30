@@ -80,7 +80,7 @@ export class CanvasDraw {
     ctx.fillRect(0, 0, 0, 0);
     var img = new Image();
     img.src = this.canvasElement.toDataURL();
+
     this.img_src = img.src;
-    //this.navCtrl.push(ImageComponent, img.src);
   }
 }

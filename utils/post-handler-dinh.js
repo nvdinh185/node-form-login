@@ -102,6 +102,7 @@ var postRegister = (req, res) => {
   })
   promise.then(data => {
     res.send(data);
+    //console.log(data);
   }).catch(err => {
     console.log('err', err);
   })
