@@ -1,4 +1,10 @@
-page-home{
+page-register{
+    .swiper-slide{
+        overflow-y: scroll;
+        display: block;
+    }
+}
+page-login{
     .swiper-slide{
         overflow-y: scroll;
         display: block;

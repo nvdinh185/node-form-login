@@ -8,6 +8,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { CanvasDraw } from '../components/canvas-draw/canvas-draw';
+import { RegisterPage } from '../components/register/register';
+import { LoginPage } from '../components/login/login';
 
 
 import { ApiHttpPublicService } from '../services/apiHttpPublicServices';
@@ -16,7 +18,9 @@ import { ApiHttpPublicService } from '../services/apiHttpPublicServices';
   declarations: [
     MyApp,
     HomePage,
-    CanvasDraw
+    CanvasDraw,
+    RegisterPage,
+    LoginPage
   ],
   imports: [
     BrowserModule,
@@ -26,7 +30,9 @@ import { ApiHttpPublicService } from '../services/apiHttpPublicServices';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    RegisterPage,
+    LoginPage
   ],
   providers: [
     StatusBar,
