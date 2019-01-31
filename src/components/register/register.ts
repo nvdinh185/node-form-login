@@ -19,25 +19,22 @@ export class RegisterPage {
   slidePages = {
     home: 0,
     register: 1,
-    signature: 2,
-    info: 3
+    signature: 2
   }
 
-  constructor(private navCtrl: NavController, 
+  constructor(private navCtrl: NavController,
     private formBuilder: FormBuilder,
     private loadingCtrl: LoadingController,
     private platform: Platform,
     private httpClient: HttpClient
-  ) {
-  }
+  ) { }
 
   ngOnInit() {
     console.log("platform", this.platform.platforms());
     this.isDesktop = this.platform.is('core');
-    if(this.isDesktop){
+    if (this.isDesktop) {
       console.log('Đây là giao diện web ở trên trình duyệt!');
     }
-
 
     this.slides.lockSwipes(true);
     this.loginForm = this.formBuilder.group({
@@ -57,35 +54,27 @@ export class RegisterPage {
 
 
   confirm() {
-    var promise = new Promise((resolve, reject) => {
-      let loading = this.loadingCtrl.create({
-        content: 'Đang kiểm tra username...'
+    let loading = this.loadingCtrl.create({
+      content: 'Đang kiểm tra username...'
+    });
+    let username = this.loginForm.value;
+    const url = 'http://localhost:8080/db/confirm';
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = JSON.stringify(username);
+    loading.present();
+    this.httpClient.post(url, body, { headers })
+      .toPromise()
+      .then(data => {
+        if (data) {
+          this.goToSlide(this.slidePages.register);
+        } else {
+          alert("Sai tên đăng nhập!");
+        }
+        loading.dismiss();
+      })
+      .catch(err => {
+        console.log(err);
       });
-      let username = this.loginForm.value;
-      const url = 'http://localhost:8080/db/confirm';
-      const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-      const body = JSON.stringify(username);
-      loading.present();
-      this.httpClient.post(url, body, { headers })
-        .toPromise()
-        .then(data => {
-          resolve(data);
-        })
-        .catch(err => {
-          reject(err);
-        });
-      loading.dismiss();
-    })
-    promise.then(data => {
-      this.loginStatus = JSON.stringify(data);
-      if (this.loginStatus == "1") {
-        this.goToSlide(this.slidePages.register);
-      } else {
-        alert("Sai tên đăng nhập!");
-      }
-    }).catch(err => {
-      console.log('err', err);
-    })
   }
 
   nhapThongTin() {

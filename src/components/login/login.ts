@@ -14,7 +14,6 @@ export class LoginPage {
   isDesktop: boolean = false;
 
   users: any = [];
-  UserInfo = { fullname: '', image: '' };
 
   loginForm: FormGroup;
 
@@ -37,51 +36,38 @@ export class LoginPage {
       console.log('Đây là giao diện web ở trên trình duyệt!');
     }
 
-
     this.slides.lockSwipes(true);
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required]]
     });
-
   }
 
   loginStatus;
-  registerStatus;
-
 
   login() {
-    var promise = new Promise((resolve, reject) => {
-      let loading = this.loadingCtrl.create({
-        content: 'Đang kiểm tra đăng nhập...'
+    let loading = this.loadingCtrl.create({
+      content: 'Đang kiểm tra đăng nhập...'
+    });
+
+    let user = this.loginForm.value;
+    const url = 'http://localhost:8080/db/check-login';
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = JSON.stringify(user);
+    loading.present();
+    this.httpClient.post(url, body, { headers })
+      .toPromise()
+      .then(data => {
+        if (data) {
+          this.getFromServer();
+        } else {
+          alert("Sai tên đăng nhập hoặc mật khẩu!");
+        }
+        loading.dismiss();
+      })
+      .catch(err => {
+        alert("Xảy ra lỗi trong quá trình post lên server!");
       });
-      let user = this.loginForm.value;
-      const url = 'http://localhost:8080/db/json-user';
-      const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-      const body = JSON.stringify(user);
-      loading.present();
-      this.httpClient.post(url, body, { headers })
-        .toPromise()
-        .then(data => {
-          resolve(data);
-          //console.log(data);
-        })
-        .catch(err => {
-          reject(err);
-          //console.log(err);
-        });
-      loading.dismiss();
-    })
-    promise.then(data => {
-      this.loginStatus = JSON.stringify(data);
-      if (this.loginStatus == "1") {
-        this.getFromServer();
-      } else {
-        alert("Sai tên đăng nhập hoặc mật khẩu!");
-      }
-    }).catch(err => {
-      console.log('err', err);
-    })
   }
 
   //lien quan den slide pages
@@ -101,19 +87,14 @@ export class LoginPage {
   }
 
   getFromServer() {
-    var promise = new Promise((resolve, reject) => {
-      this.httpClient.get('http://localhost:8080/db/get-users')
-        .toPromise()
-        .then(data => {
-          resolve(data);
-        })
-        .catch(err => {
-          reject(err);
-        })
-    });
-    promise.then(data => {
-      this.users = data;
-      this.goToSlide(this.slidePages.info);
-    });
+    this.httpClient.get('http://localhost:8080/db/get-users')
+      .toPromise()
+      .then(data => {
+        this.users = data;
+        this.goToSlide(this.slidePages.info);
+      })
+      .catch(err => {
+        console.log(err);
+      })
   }
 }

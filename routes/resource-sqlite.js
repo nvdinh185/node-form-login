@@ -9,10 +9,10 @@ router.post('/confirm'
     , postHandler.postConfirm
 );
 router.post('/register'
-, postHandler.postRegister
+    , postHandler.postRegister
 );
-router.post('/json-user'
-    , postHandler.jsonPost
+router.post('/check-login'
+    , postHandler.postLogin
 );
 router.get('/get-users'
     , gettHandler.getUsers
