@@ -103,7 +103,7 @@ export class RegisterPage {
         } else {
           alert("Đăng ký thất bại!");
         }
-        this.navCtrl.pop();
+        //this.navCtrl.pop();
       })
       .catch(err => {
         alert("Xảy ra lỗi trong quá trình post lên server!");

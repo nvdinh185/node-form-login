@@ -9,9 +9,6 @@ function main(isHttp) {
 
   app.use(express.static(__dirname + '/www'));
     
-  const resource1 = require('./routes/resource-excel');
-  app.use('/excel', resource1);
-
   const resource = require('./routes/resource-sqlite');
   app.use('/db', resource);
 
