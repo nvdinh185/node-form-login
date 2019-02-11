@@ -99,11 +99,11 @@ export class RegisterPage {
       .then(data => {
         this.registerStatus = JSON.stringify(data);
         if (this.registerStatus == "1") {
-          alert("Đã đăng ký thành công!");
+          alert("Đăng ký thành công!");
         } else {
           alert("Đăng ký thất bại!");
         }
-        //this.navCtrl.pop();
+        this.navCtrl.pop();
       })
       .catch(err => {
         alert("Xảy ra lỗi trong quá trình post lên server!");
