@@ -1,14 +1,10 @@
 const express = require('express');
 const app = express();
-const os = require('os');
 
 function main(isHttp) {
-
   const cors = require('./handlers/cors-handler');
   app.use(cors.CorsHandler.cors);
 
-  app.use(express.static(__dirname + '/www'));
-    
   const resource = require('./routes/resource-sqlite');
   app.use('/db', resource);
 
@@ -16,12 +12,8 @@ function main(isHttp) {
     const httpServer = require('http').createServer(app);
     const portHttp = process.env.PORT || isHttp;
     httpServer.listen(portHttp, () => {
-      console.log("Server HTTP (" + os.platform() + "; " + os.arch() + ") is started with PORT: "
-        + portHttp
-        + "\n tempdir: " + os.tmpdir()
-        + "\n " + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
-      );
-    });   
+      console.log("Server HTTP is started with PORT: " + portHttp);
+    });
   }
 }
 
