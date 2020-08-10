@@ -1,7 +1,5 @@
 {
-  "name": "ionic-form-login-vcb",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "ionic-angular"
+  "name": "ionic4-new",
+  "integrations": {},
+  "type": "angular"
 }

@@ -1,22 +1,26 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 
-function main(isHttp) {
-  const cors = require('./handlers/cors-handler');
-  app.use(cors.CorsHandler.cors);
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type,X-Requested-With');
+  next();
+});
 
-  const resource = require('./routes/resource-sqlite');
-  app.use('/db', resource);
+main = (isHttp) => {
 
+  app.use('/m-inovation/api/auth', require('./routes/auth/login-auth'));
+  
   if (isHttp) {
     const httpServer = require('http').createServer(app);
     const portHttp = process.env.PORT || isHttp;
     httpServer.listen(portHttp, () => {
-      console.log("Server HTTP is started with PORT: " + portHttp);
+      console.log("Server is running in port: " + portHttp);
     });
   }
 }
 
-const isHttp = 8080;
+const isHttp = 9223;
 
 main(isHttp);
